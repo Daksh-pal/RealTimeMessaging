@@ -50,7 +50,7 @@ export const signup = async (req,res) =>{
 
 
     } catch (err) {
-        console.log(err.message)
+        console.log("Error in signup ->",err.message)
         return res.status(500).json({err:"Internal server error"})
     }
 };
@@ -75,7 +75,7 @@ export const login = async (req,res) =>{
         });
 
     } catch (err) {
-        console.log(err)
+        console.log("error in login ->",err)
         return res.status(500).json({err:"Internal server error"})
     }
 }
@@ -85,7 +85,7 @@ export const logout =(req,res) =>{
         res.cookie("jwt","",{maxAge:0});
         res.status(200).json({message:"Logged out successfully"});
     } catch (err) {
-        console.log("Error while logging out");
+        console.log("Error while logging out ->",err);
         res.status(500).json({message :" Internal server error"})
     }
 }
