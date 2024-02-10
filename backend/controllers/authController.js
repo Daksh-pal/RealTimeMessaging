@@ -2,10 +2,10 @@ import User from "../models/userModel.js";
 import generateCookieAndToken from "../utils/generateToken.js";
 import bcrypt from "bcryptjs"
 
-export const signup =async (req,res) =>{
+export const signup = async (req,res) =>{
     try {
         const {fullname , username , password , confirmpassword , gender} = req.body;
-        if(password!=confirmpassword){
+        if(password!==confirmpassword){
             return res.status(400).json({error : "Passwords don't match"})
         }
         const user = await User.findOne({username})
@@ -31,29 +31,34 @@ export const signup =async (req,res) =>{
             profilePic: gender === "male"?boyProfilePic:girlProfilePic,
 
         })
-        await newUser.save();
+        if(newUser){
+            await newUser.save();
 
-        // Generate cookie and set token 
-        generateCookieAndToken(newUser._id,res);
+            // Generate cookie and set token 
+            generateCookieAndToken(newUser._id,res);
 
-            res.status(201).json({
+            return res.status(201).json({
             _id : newUser._id,
             fullname: newUser.fullname,
             username : newUser.username,
             profilePic : newUser.profilePic
-        });
+            });
+        }
+        else {
+			return res.status(400).json({ error: "Invalid user data" });
+		}
 
 
     } catch (err) {
-        console.log(err)
-        res.status(500).json({err:"Internal server error"})
+        console.log(err.message)
+        return res.status(500).json({err:"Internal server error"})
     }
 };
 
-export const login =async (req,res) =>{
+export const login = async (req,res) =>{
     try {
         const {username , password} = req.body;
-        const user =await User.findOne({username});
+        const user = await User.findOne({username});
         const checkPassword = await bcrypt.compare(password , user?.password || "");
 
         if(!user || !checkPassword){
@@ -62,7 +67,7 @@ export const login =async (req,res) =>{
 
         generateCookieAndToken(user._id,res);
 
-        res.status(200).json({
+        return res.status(200).json({
             _id : user._id,
             fullname:user.fullname,
             username:user.username,
@@ -71,7 +76,7 @@ export const login =async (req,res) =>{
 
     } catch (err) {
         console.log(err)
-        res.status(500).json({err:"Internal server error"})
+        return res.status(500).json({err:"Internal server error"})
     }
 }
 

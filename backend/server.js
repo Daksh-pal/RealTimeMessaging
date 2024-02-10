@@ -4,6 +4,7 @@ import messageRoutes from './routes/messageRoutes.js'
 import dotenv from 'dotenv';
 import connectToMongoDB from './db/connectToMongoDB.js';
 import cookieParser from 'cookie-parser';
+import userRoutes from "./routes/authRoutes.js"
 dotenv.config();
 const app = express();
 
@@ -16,6 +17,7 @@ const PORT = process.env.PORT || 3000;
 // Routing
 app.use('/api/auth',authRoutes)
 app.use('/api/messages',messageRoutes)
+app.use("/api/users", userRoutes);
 
 app.listen(PORT,()=>{
     connectToMongoDB();
