@@ -2,8 +2,14 @@ import GenderCheckbox from "./GenderCheckbox";
 
 const Signup = ()=>{
 
-function handleSignup(){
-    // fetch('http://localhost:3000/api/auth/signup',)
+const handleSignup = async() =>{
+    const response = await axios("http://localhost:3000/api/auth/signup",{
+        fullname,
+        username,
+        password,
+        confirmPassword,
+        gender
+    })
 }
     
 
