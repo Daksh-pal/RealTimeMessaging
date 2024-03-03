@@ -1,21 +1,21 @@
 const GenderCheckbox = ()=>{
     return (
         // imported from DaisyUI 
-            <div className="flex justify-center">
+            <div className="flex justify-center ">
                 <div className="form-control">
-                    <label className={`label gap-2 cursor-pointer`}>
-                        <span className="label-text text-black">Male</span>
-                        <input type="checkbox" className="checkbox checkbox-xs checkbox-success  border-slate-900"/>
+                    <label className="label gap-2 cursor-pointer">
+                        <span className="label-text">Male</span> 
+                        <input type="checkbox" className="checkbox checkbox-xs" />
                     </label>
-                </div>    
+                </div>
                 
-                <div>
-                    <label className={`label gap-2 cursor-pointer`}>
-                        <span className="label-text text-black">Female</span>
-                        <input type="checkbox" className="checkbox checkbox-xs checkbox-success border-slate-900"/>
+                <div className="form-control">
+                    <label className="label gap-2 cursor-pointer">
+                        <span className="label-text">Female</span> 
+                        <input type="checkbox" className="checkbox checkbox-xs" />
                     </label>
                 </div>
             </div>
-    );
-}
+        );
+    }
 export default GenderCheckbox;

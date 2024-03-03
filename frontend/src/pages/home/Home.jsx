@@ -3,7 +3,7 @@ import MessageContainer from "../../components/messages/MessageContainer";
 
 const Home = () =>{
     return (
-        <div className="flex rounded-lg overflow-hidden">
+        <div className="flex sm:h-[450px] md:h-[500px] rounded-lg overflow-hidden ">
             <Sidebar/>
             <MessageContainer/>
         </div>

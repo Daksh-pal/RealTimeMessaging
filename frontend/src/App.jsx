@@ -5,7 +5,7 @@ import Home from './pages/home/Home'
 
 function App() {
   return (
-    <div className='flex items-center justify-center p-4 h-screen bg-emerald-50 '>
+    <div className='flex items-center justify-center p-4 h-screen bg-blue-50 '>
       <Home/>
       {/* <Login/> */}
       {/* <Signup/> */}

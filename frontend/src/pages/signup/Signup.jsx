@@ -1,4 +1,5 @@
 import GenderCheckbox from "./GenderCheckbox";
+import axios from 'axios';
 
 const Signup = ()=>{
 
@@ -14,7 +15,7 @@ const handleSignup = async() =>{
     
 
     return <div className="flex items-center justify-center flex-col mx-auto min-w-96">
-        <h1 className="text-4xl text-lime-800 font-bold">Register now</h1>
+        <h1 className="text-4xl text-gray-800 font-bold">Register now</h1>
         <div className="w-full p-6 flex-col flex">
             <input type="text" placeholder="Full name" className=" bg-white input input-bordered w-full max-w-xs my-1" />
             <input type="text" placeholder="Username" className=" bg-white input input-bordered w-full max-w-xs my-1" />
@@ -27,7 +28,7 @@ const handleSignup = async() =>{
                 <a href="#" className="font-bold">Login </a>
             </div>
 
-            <button type="button" onClick={handleSignup()} className="text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2 bg-green-800 hover:bg-green-900 ">Signup</button>
+            <button type="button" onClick={handleSignup} className="text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2 bg-gray-700 hover:bg-gray-900 ">Signup</button>
         </div>
     </div>
 }
