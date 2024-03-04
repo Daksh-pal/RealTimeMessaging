@@ -5,9 +5,11 @@ import dotenv from 'dotenv';
 import connectToMongoDB from './db/connectToMongoDB.js';
 import cookieParser from 'cookie-parser';
 import userRoutes from "./routes/userRoutes.js"
+import cors from 'cors';
 dotenv.config();
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
