@@ -24,9 +24,8 @@ export const signup = async (req,res) =>{
             fullname,
             username,
             password : hashedPassword,
-            confirmpassword,
             gender,
-            profilePic: gender === "Male"||"male"?boyProfilePic:girlProfilePic,
+            profilePic: gender === "Male" || gender === "male"?boyProfilePic:girlProfilePic,
 
         })
         if(newUser){
@@ -49,7 +48,8 @@ export const signup = async (req,res) =>{
 
     } catch (err) {
         console.log("Error in signup ->",err.message)
-        return res.status(500).json({err:"Internal server error"})
+        return res.status(500).json({ error: `Internal server error: ${err.message}` });
+
     }
 };
 

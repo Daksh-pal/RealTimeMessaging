@@ -1,39 +1,47 @@
-import GenderCheckbox from "./GenderCheckbox";
 import axios from 'axios';
 import { useState } from "react";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
+import toast from 'react-hot-toast';
 
 const Signup = ()=>{
 
     const [fullname,setFullname] = useState("");
     const [username,setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword , setConfirmPassword] = useState("");
+    const [confirmpassword , setConfirmPassword] = useState("");
     const [gender,setGender] = useState("");
 
-
+const navigate = useNavigate();
 
 const handleSignup = async(e) =>{
     e.preventDefault();
-
-    const currentGender = gender;
-
-    try {
+    if(gender=="Gender"){
+      toast.error("Select correct field");
+    }
+    else{
+      try {
         const response = await axios.post("http://localhost:3000/api/auth/signup", {
           fullname,
           username,
           password,
-          confirmPassword,
-          gender: currentGender,
+          confirmpassword,
+          gender,
         });
         if (response.status === 201) {
           console.log("Signup successful:", response.data);
+          toast.success("Sign up successfully");
+          
+        navigate('/login')
+        toast.success("Sign up successfully");
         } else {
           throw new Error("Signup failed with status: " + response.status);
         }
       } catch (error) {
         console.error("Signup error:", error.message);
+        toast.error("Enter valid details");
       }
+    }
+    
 }
     
 
@@ -45,12 +53,14 @@ const handleSignup = async(e) =>{
             <input type="password" placeholder="Password" className=" bg-white input input-bordered w-full max-w-xs my-1 text-gray-800" onChange={e=>{setPassword(e.target.value)}}/>
             <input type="password" placeholder="Confirm Password" className=" bg-white input input-bordered w-full max-w-xs my-1 text-gray-800" onChange={e=>{setConfirmPassword(e.target.value)}}/>
 
-            {/* GenderCheckbox is the checkbox  */}
-            <GenderCheckbox onGenderChange={(checkedGender)=>{setGender(checkedGender)}}/>
             
-            
+        <select value={gender} onChange={(e) => setGender(e.target.value)} className="bg-white input input-bordered w-full max-w-xs my-1 text-gray-800">
+          <option value="">Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
 
-            <button type="button" onClick={handleSignup} className="text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2 bg-gray-700 hover:bg-gray-900 ">Signup</button>
+            <button type="button" onClick={handleSignup}  className="text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2 bg-gray-700 hover:bg-gray-900 ">Signup</button>
             <Link to='/login' className="text-gray-800 text-sm text-center">Already have an account.</Link>
         </div>
     </div>
