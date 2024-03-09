@@ -1,7 +1,9 @@
 import axios from 'axios';
 import { useState } from "react";
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import toast from 'react-hot-toast';
+import { userAuthContext } from '../../contextAndHooks/AuthContext';
+
 
 const Signup = ()=>{
 
@@ -10,13 +12,17 @@ const Signup = ()=>{
     const [password, setPassword] = useState("");
     const [confirmpassword , setConfirmPassword] = useState("");
     const [gender,setGender] = useState("");
-
-const navigate = useNavigate();
+    const { setAuthUser} = userAuthContext();
 
 const handleSignup = async(e) =>{
     e.preventDefault();
-    if(gender=="Gender"){
-      toast.error("Select correct field");
+
+    if(password!=confirmpassword){
+      toast.error("Passwords do not match");
+    }
+
+    else if(!gender){
+      toast.error("Please choose valid Gender")
     }
     else{
       try {
@@ -26,24 +32,31 @@ const handleSignup = async(e) =>{
           password,
           confirmpassword,
           gender,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
         if (response.status === 201) {
+                    
           console.log("Signup successful:", response.data);
           toast.success("Sign up successfully");
-          
-        navigate('/login')
-        toast.success("Sign up successfully");
-        } else {
+        }
+        else {
           throw new Error("Signup failed with status: " + response.status);
         }
+          localStorage.setItem("user",JSON.stringify(response.data));        
+          setAuthUser(response.data);
+
       } catch (error) {
         console.error("Signup error:", error.message);
-        toast.error("Enter valid details");
-      }
+
+
+        toast.error("Invalid Credentials");
+      }    
     }
-    
 }
-    
 
     return <div className="flex items-center justify-center flex-col mx-auto min-w-96">
         <h1 className="text-4xl text-gray-800 font-bold">Sign Up</h1>
@@ -54,11 +67,11 @@ const handleSignup = async(e) =>{
             <input type="password" placeholder="Confirm Password" className=" bg-white input input-bordered w-full max-w-xs my-1 text-gray-800" onChange={e=>{setConfirmPassword(e.target.value)}}/>
 
             
-        <select value={gender} onChange={(e) => setGender(e.target.value)} className="bg-white input input-bordered w-full max-w-xs my-1 text-gray-800">
-          <option value="">Gender</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
+            <select value={gender} onChange={(e) => setGender(e.target.value)} className="bg-white input input-bordered w-full max-w-xs my-1 text-gray-800">
+              <option value="">Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
 
             <button type="button" onClick={handleSignup}  className="text-white font-medium rounded-lg text-sm px-5 py-2.5 me-2 my-2 bg-gray-700 hover:bg-gray-900 ">Signup</button>
             <Link to='/login' className="text-gray-800 text-sm text-center">Already have an account.</Link>

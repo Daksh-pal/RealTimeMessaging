@@ -6,8 +6,8 @@ const Login = () =>{
 
 const [username , setUsername] = useState("");
 const [password , setPassword] = useState("");
-    
-const navigate = useNavigate();
+
+
 
 const handleLogin = async(e)=>{
     e.preventDefault();
@@ -16,14 +16,21 @@ const handleLogin = async(e)=>{
         const response = await axios.post("http://localhost:3000/api/auth/login", {
           username,
           password
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
-        if (response.status === 200) {
+        if (response.status === 201) {
           console.log("Login successful:", response.data);
           toast.success("Logged in successfully");
-          navigate('/')
         } else {
           throw new Error("Login failed with status: " + response.status);
         }
+        localStorage.setItem("user",JSON.stringify(response.data));        
+        setAuthUser(response.data);
+
       } catch (error) {
         console.error("Login error:", error.message);
         toast.error("Invalid credentials");
