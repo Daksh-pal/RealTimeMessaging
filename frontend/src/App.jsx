@@ -4,11 +4,11 @@ import Login from './pages/login/Login'
 import Signup from './pages/signup/Signup'
 import Home from './pages/home/Home'
 import { Toaster } from 'react-hot-toast'
-import { userAuthContext } from './contextAndHooks/AuthContext'
+import { useAuthContext } from './contextAndHooks/AuthContext'
 
 
 function App() {
-  const {authUser} = userAuthContext();
+  const {authUser} = useAuthContext();
   return (
     <div className='flex items-center justify-center p-4 h-screen bg-blue-50 '>
 

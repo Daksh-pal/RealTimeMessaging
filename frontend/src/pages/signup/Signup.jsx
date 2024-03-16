@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from "react";
 import {Link} from 'react-router-dom'
 import toast from 'react-hot-toast';
-import { userAuthContext } from '../../contextAndHooks/AuthContext';
+import { useAuthContext } from '../../contextAndHooks/AuthContext';
 
 
 const Signup = ()=>{
@@ -12,7 +12,7 @@ const Signup = ()=>{
     const [password, setPassword] = useState("");
     const [confirmpassword , setConfirmPassword] = useState("");
     const [gender,setGender] = useState("");
-    const { setAuthUser} = userAuthContext();
+    const { setAuthUser} = useAuthContext();
 
 const handleSignup = async(e) =>{
     e.preventDefault();
@@ -51,8 +51,6 @@ const handleSignup = async(e) =>{
 
       } catch (error) {
         console.error("Signup error:", error.message);
-
-
         toast.error("Invalid Credentials");
       }    
     }

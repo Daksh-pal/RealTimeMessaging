@@ -1,14 +1,22 @@
-const Conversation = ()=>{
+import useConversation from "../../zustand/useConversation.js";
+
+const Conversation = (conversation , lastIdx)=>{
+
+    
+    const {selectedConversation , setSelectedConversation} = useConversation(); 
+    const isSelected = selectedConversation ?._id === conversation._id;
+
     return <>
-    <div className="flex gap-2 items-center hover:bg-gray-400  rounded p-2 cursor-pointer">
+    <div className={`flex gap-2 items-center hover:bg-gray-400  rounded p-2 cursor-pointer ${isSelected ? "bg-gray-400" : ""}`}>
         <div className="w-12 rounded-full avatar online">
-            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+            <img src={conversation.profilePic}/>
         </div>
         <div>
-            <p className="font-bold text-gray-800 ">Daksh Pal</p>
+            <p className="font-bold text-gray-800 ">{conversation.fullName}</p>
         </div>    
     </div>
-    <div className='divider my-0 py-0 h-1' />
+    
+    {!lastIdx && <div className='divider my-0 py-0 h-1' /> }
     </>
 }
 export default Conversation;

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import {Link, useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 import toast from "react-hot-toast";
+import { useAuthContext } from "../../contextAndHooks/AuthContext.jsx";
 const Login = () =>{
 
 const [username , setUsername] = useState("");
 const [password , setPassword] = useState("");
-
+const {setAuthUser} = useAuthContext();
 
 
 const handleLogin = async(e)=>{
@@ -22,12 +23,16 @@ const handleLogin = async(e)=>{
             'Content-Type': 'application/json',
           },
         });
+
         if (response.status === 201) {
           console.log("Login successful:", response.data);
           toast.success("Logged in successfully");
-        } else {
+        } 
+        
+        else {
           throw new Error("Login failed with status: " + response.status);
         }
+
         localStorage.setItem("user",JSON.stringify(response.data));        
         setAuthUser(response.data);
 
