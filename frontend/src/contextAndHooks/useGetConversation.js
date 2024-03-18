@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import axios from 'axios';
 import toast from "react-hot-toast";
 
 const useGetConversation = () => {
@@ -11,7 +10,13 @@ useEffect(()=>{
     const getConversations = async()=>{
         setLoading(true);
         try {
-            const response = await fetch("http://localhost:3000/api/users");
+            const token = localStorage.getItem('user')
+
+            const headers = new Headers({
+                'Authorization': `Bearer ${token}`
+              });
+
+            const response = await fetch("http://localhost:3000/api/users",{headers});
             const data = await response.json();
             if (data.error) {
                 throw new Error(data.error);

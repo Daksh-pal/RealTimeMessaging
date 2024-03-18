@@ -1,5 +1,6 @@
 import User from "../models/userModel.js";
 import generateCookieAndToken from "../utils/generateToken.js";
+import  jwt  from "jsonwebtoken";
 import bcrypt from "bcryptjs"
 
 export const signup = async (req,res) =>{
@@ -64,12 +65,14 @@ export const login = async (req,res) =>{
         }
 
         generateCookieAndToken(user._id,res);
+        const token = jwt.sign({ userId: user._id }, process.env.JWTKEY, { expiresIn: '1d' });
 
         return res.status(201).json({
             _id : user._id,
             fullname:user.fullname,
             username:user.username,
-            profilePic:user.profilePic
+            profilePic:user.profilePic,
+            token:token
         });
 
     } catch (err) {
