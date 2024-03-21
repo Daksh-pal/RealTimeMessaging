@@ -10,13 +10,8 @@ useEffect(()=>{
     const getConversations = async()=>{
         setLoading(true);
         try {
-            const token = localStorage.getItem('user')
 
-            const headers = new Headers({
-                'Authorization': `Bearer ${token}`
-              });
-
-            const response = await fetch("http://localhost:3000/api/users",{headers});
+            const response = await fetch("http://localhost:3000/api/users",);
             const data = await response.json();
             if (data.error) {
                 throw new Error(data.error);

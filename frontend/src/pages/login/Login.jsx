@@ -24,7 +24,7 @@ const handleLogin = async (e) => {
           console.log("Login successful:", data);
           toast.success("Logged in successfully");
 
-          localStorage.setItem("user", JSON.stringify(data.token));
+          localStorage.setItem("user", JSON.stringify(data));
           setAuthUser(data);
       } else {
           throw new Error("Login failed with status: " + response.status);
@@ -53,3 +53,6 @@ const handleLogin = async (e) => {
     }
 
 export default Login
+
+
+

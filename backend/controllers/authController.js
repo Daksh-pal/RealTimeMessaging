@@ -35,7 +35,7 @@ export const signup = async (req,res) =>{
             // Generate cookie and set token 
             generateCookieAndToken(newUser._id,res);
 
-            return res.status(201).json({
+            res.status(201).json({
             _id : newUser._id,
             fullname: newUser.fullname,
             username : newUser.username,
@@ -65,14 +65,12 @@ export const login = async (req,res) =>{
         }
 
         generateCookieAndToken(user._id,res);
-        const token = jwt.sign({ userId: user._id }, process.env.JWTKEY, { expiresIn: '1d' });
 
-        return res.status(201).json({
+        res.status(201).json({
             _id : user._id,
             fullname:user.fullname,
             username:user.username,
             profilePic:user.profilePic,
-            token:token
         });
 
     } catch (err) {
